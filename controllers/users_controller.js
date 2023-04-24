@@ -1,5 +1,11 @@
 const Users = require('../models/users');
 
+const user = function(req,res){
+    return res.redirect('/users/profile',{
+        title: 'Users'
+    });
+}
+
 const profile = function(req, res){
     return res.render('user_profile',{
         title: 'Users'
@@ -13,6 +19,10 @@ const profileUserId = function(req, res){
 
 //render the sign up page
 const signUp = function(req, res){
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up',{
         title: 'Codeial | Sign In'
     });
@@ -20,6 +30,10 @@ const signUp = function(req, res){
 
 //render the sign in page
 const signIn = function(req, res){
+    if(req.isAuthenticated())
+    {
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_in',{
         title: 'Codeial | Sign Up'
     });
@@ -61,7 +75,17 @@ const create = async function(req, res){
 }
 
 const createSession = function(req, res){
-
+    return res.redirect('/users/profile');
 }
 
-module.exports = {profile, profileUserId, signUp, signIn, create};
+const destroySession = function(req, res){
+    req.logout(err => {
+        if(err){
+            console.log(err);
+            return;
+        }
+        return res.redirect('/users/profile');
+    });
+}
+
+module.exports = {user, profile, profileUserId, signUp, signIn, create, createSession, destroySession};

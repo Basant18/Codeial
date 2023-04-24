@@ -1,0 +1,8 @@
+header {
+  background-color: blue;
+}
+header #page {
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
