@@ -1,7 +1,23 @@
-const home = function(req, res){
-    console.log(req.cookies);
+const Post = require('../models/post');
+
+const home = async (req, res)=>{
+    // console.log(req.cookies);
+    let posts;
+    try{
+        // populate the user of each post
+        posts = await Post.find({}).populate('user');
+        if(!posts)
+        {
+            console.log('users find is empty');
+            return;
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
     return res.render('home', {
-       title: 'Home'
+        title: 'Home',
+        posts: posts
     });
 }
 
