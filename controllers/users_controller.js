@@ -6,10 +6,32 @@ const user = function(req,res){
     });
 }
 
-const profile = function(req, res){
-    return res.render('user_profile',{
-        title: 'Users'
-    });
+const profile = async function(req, res){
+    try{
+        let user = await Users.findById(req.params.id);
+        return res.render('user_profile',{
+            title: 'Users',
+            profile_user: user
+        });
+    }
+    catch(err)
+    {
+        console.log(err);
+        return;
+    }
+}
+
+const update = async function(req, res){
+    try{
+        if(req.user.id == req.params.id){
+            let users = await Users.findByIdAndUpdate(req.params.id, req.body);
+            return res.redirect('back');
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+    return res.status(401).send('Unauthorized');
 }
 
 const profileUserId = function(req, res){
@@ -75,10 +97,12 @@ const create = async function(req, res){
 }
 
 const createSession = function(req, res){
+    req.flash('success',"LoggedIn Successfully");
     return res.redirect('/users/profile');
 }
 
 const destroySession = function(req, res){
+    req.flash('success',"You have logged out!");
     req.logout(err => {
         if(err){
             console.log(err);
@@ -88,4 +112,4 @@ const destroySession = function(req, res){
     });
 }
 
-module.exports = {user, profile, profileUserId, signUp, signIn, create, createSession, destroySession};
+module.exports = {user, profile, update, profileUserId, signUp, signIn, create, createSession, destroySession};
