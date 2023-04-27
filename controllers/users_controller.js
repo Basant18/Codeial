@@ -9,6 +9,7 @@ const user = function(req,res){
 const profile = async function(req, res){
     try{
         let user = await Users.findById(req.params.id);
+        console.log(user);
         return res.render('user_profile',{
             title: 'Users',
             profile_user: user
@@ -98,7 +99,7 @@ const create = async function(req, res){
 
 const createSession = function(req, res){
     req.flash('success',"LoggedIn Successfully");
-    return res.redirect('/users/profile');
+    return res.redirect('/home');
 }
 
 const destroySession = function(req, res){
@@ -108,7 +109,7 @@ const destroySession = function(req, res){
             console.log(err);
             return;
         }
-        return res.redirect('/users/profile');
+        return res.redirect('/users/sign-in');
     });
 }
 

@@ -3,7 +3,7 @@
     Codeial / Profile Page
 </h1>   
 
-<% if(user.id == profile_user._id){ %>
+<% if(profile_user != null && user.id == profile_user.id){ %>
     <!-- If user matches show the form -->
     <form action="/users/update/<%= profile_user.id %>" method = "POST">
         <input type="text" name="name" placeholder="Enter your Name" value="<%= profile_user.name %>" required>
