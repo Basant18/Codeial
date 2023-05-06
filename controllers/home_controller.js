@@ -7,7 +7,7 @@ const home = async (req, res)=>{
     let users;
     try{
         // populate the user of each post
-        posts = await Post.find({}).populate('user')
+        posts = await Post.find({}).populate('user').sort('-createdAt')
         .populate({
             path: 'comments',
             populate:{
