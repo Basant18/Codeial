@@ -5,7 +5,13 @@
   width: 70%;
   padding: 10px;
 }
-#home-container #users-friends {
+#home-container #all-friends {
+  width: 30%;
+  padding: 10px;
+  border-left: 1px solid blue;
+  height: 100%;
+}
+#home-container #all-users {
   width: 30%;
   padding: 10px;
   border-left: 1px solid blue;

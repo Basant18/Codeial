@@ -20,13 +20,37 @@
             </ul>
         </div>
     </section>
-    
-    <section id="user-friends">
+
+    <section id="all-friends">
         <h4>Friends</h4>
+        <% for(let f of all_friends){ %>
+            <p><%= f.user.name %></p>
+            <a href="friends/delete/<%=f.id%>">X</a>
+        <% } %>    
+    </section>
+
+    <section id="all-users">
+        <h4>All Users</h4>
         <% for(let u of all_users){ %>
             <p><a href="users/profile/<%= u.id %>"> <%= u.name %> </a></p>
         <% } %>
     </section>
+    <%- include('_chat_box') -%>
 </div>
 <script src="/js/home_posts.js"></script>
 <script src="js/posts_comments.js"></script>
+<!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on page -->
+<script src="js/toggle_likes.js"></script>
+<script>
+    $('.toggle-likes-button').each(function(){
+        let self = this;
+        let toggleLike = new toggleLike(self); 
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+<script src="/js/chat_engine.js"></script>
+<% if(locals.user){ %>
+    <script>
+        new chatEngine('user-chat-box', '<%= locals.user.email %>')
+    </script>
+<% } %>    
